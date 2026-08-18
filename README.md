@@ -179,6 +179,11 @@ asamblea. El control funciona así:
 Como el conteo es por carpeta de asamblea, el límite se reinicia solo cada vez
 que cambias `FECHA_ASAMBLEA`.
 
+Una carta ya guardada tampoco se puede volver a guardar: el botón queda
+desactivado y en su lugar aparece **«Llenar otra carta»**, que limpia otorgante,
+unidad, identificación y firma para empezar una nueva. Así un segundo clic no
+deja dos PDF idénticos en Drive gastándole al apoderado sus dos cartas.
+
 ---
 
 ## Alternativa: subir el código con `clasp` en vez de copiar y pegar
@@ -313,3 +318,4 @@ implica desplegar un proyecto en vez de repartir un archivo estático.
   exige: algunos reglamentos piden firma autógrafa en original, testigos
   obligatorios o limitan cuántas cartas poder puede acumular una misma persona.
   **Revisa el reglamento antes de repartir el enlace.**
+# cartas-poder
