@@ -74,10 +74,14 @@
   /* Interlineado y márgenes ajustados para que la carta quepa siempre
      en una sola hoja carta. */
   #doc{
-    background:#fff; width:21.59cm; min-height:27.94cm; padding:1.6cm 2.1cm;
+    background:#fff; width:816px; min-height:1056px; padding:60px 79px;
     margin:0 auto; border:1px solid var(--line); border-radius:4px;
     font-family:"Times New Roman",Georgia,serif; font-size:11pt; line-height:1.42;
     color:#000; text-align:justify;
+    /* Safari/Chrome móvil inflan la tipografía de un bloque ancho dentro de un
+       viewport angosto; en el lienzo del PDF eso salía como texto gigante y una
+       segunda hoja. */
+    -webkit-text-size-adjust:100%; text-size-adjust:100%;
   }
   #doc .lugar-fecha{text-align:right; margin-bottom:16px}
   #doc h1.titulo{
@@ -348,6 +352,10 @@
   }
 
   /* ---------- Generación del PDF ---------- */
+  // Medidas de una hoja carta en píxeles CSS (96 dpi): 8.5in x 11in.
+  const HOJA_PX_ANCHO = 816;
+  const HOJA_PX_ALTO  = 1056;
+
   async function generarPDF(){
     const doc = $('doc');
     // El borde de pantalla no va en el PDF: suma píxeles y provoca una
@@ -356,13 +364,18 @@
     doc.style.border = 'none';
     let lienzo;
     try{
+      // El ancho de captura se fija a la hoja y no se toma del viewport: en
+      // celular la ventana es más angosta que el documento y html2canvas
+      // relayoutea el clon, lo que agrandaba el texto.
       lienzo = await html2canvas(doc, {
         scale: 2,
         backgroundColor: '#ffffff',
         useCORS: true,
         logging: false,
-        windowWidth: doc.scrollWidth,
-        windowHeight: doc.scrollHeight
+        width: HOJA_PX_ANCHO,
+        height: Math.max(HOJA_PX_ALTO, doc.scrollHeight),
+        windowWidth: HOJA_PX_ANCHO,
+        windowHeight: Math.max(HOJA_PX_ALTO, doc.scrollHeight)
       });
     }finally{
       doc.style.border = bordeOriginal;
@@ -374,24 +387,22 @@
     const altoPag  = pdf.internal.pageSize.getHeight();
 
     const img = lienzo.toDataURL('image/png');
-    const altoImg = lienzo.height * anchoPag / lienzo.width;
+
+    // La carta siempre debe caber en una sola hoja: si el contenido creció
+    // (nombres largos, firma alta), se reduce proporcionalmente en vez de
+    // derramarse a una segunda página.
+    let ancho = anchoPag;
+    let alto  = lienzo.height * anchoPag / lienzo.width;
+    if(alto > altoPag){
+      const factor = altoPag / alto;
+      alto  = altoPag;
+      ancho = anchoPag * factor;
+    }
+    const x = (anchoPag - ancho) / 2;
 
     // 'FAST' aplica compresión Flate; sin ella jsPDF incrusta el PNG en crudo
     // y el archivo se dispara a decenas de MB.
-    const poner = (y) => pdf.addImage(img, 'PNG', 0, y, anchoPag, altoImg, 'carta', 'FAST');
-
-    // Si el contenido excede una carta, se reparte en páginas sucesivas.
-    // La tolerancia evita una página extra en blanco por redondeo de cm a px.
-    const TOLERANCIA = 24; // pt
-    let restante = altoImg, y = 0;
-    poner(y);
-    restante -= altoPag;
-    while(restante > TOLERANCIA){
-      y -= altoPag;
-      pdf.addPage();
-      poner(y);
-      restante -= altoPag;
-    }
+    pdf.addImage(img, 'PNG', x, 0, ancho, alto, 'carta', 'FAST');
     return pdf;
   }
 
@@ -517,9 +528,10 @@
     } else if(!libres.length){
       sel.appendChild(new Option('— sin apoderados disponibles —',''));
     } else {
-      if(libres.length > 1) sel.appendChild(new Option('— Selecciona —',''));
       libres.forEach(n => sel.appendChild(new Option(n, n)));
-      if(libres.indexOf(previo) !== -1) sel.value = previo;
+      // Por omisión queda seleccionado el primero de config.js que todavía
+      // puede recibir cartas; así se reparten en el orden de la lista.
+      sel.value = libres.indexOf(previo) !== -1 ? previo : libres[0];
     }
 
     const ocupados = APODERADOS.length - libres.length;

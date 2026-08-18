@@ -26,6 +26,10 @@ window.CARTA_CONFIG = {
   // Agrega o quita nombres de esta lista según convenga.
   APODERADOS: [
     "Jaime Calderón Mátar"
+    ,"Egon Peter Warner Salazar"
+    ,"Claudia Sofía Curiel Rentería"
+    ,"Isidoro Sarfati Dultzin"
+    ,"Luis Reyes Galván"
   ]
 
 };
