@@ -1,5 +1,9 @@
 node_modules/
 
+# Copia de los 4 archivos que se arrastran al hosting; se regenera cuando haga
+# falta y duplicaría lo que ya está versionado.
+publicar/
+
 # CREDENCIALES DE CLASP — nunca deben llegar al repo.
 # Contienen el token OAuth con acceso a tu Google Drive.
 .clasprc.json
