@@ -179,10 +179,12 @@ asamblea. El control funciona así:
 Como el conteo es por carpeta de asamblea, el límite se reinicia solo cada vez
 que cambias `FECHA_ASAMBLEA`.
 
-Una carta ya guardada tampoco se puede volver a guardar: el botón queda
-desactivado y en su lugar aparece **«Llenar otra carta»**, que limpia otorgante,
-unidad, identificación y firma para empezar una nueva. Así un segundo clic no
-deja dos PDF idénticos en Drive gastándole al apoderado sus dos cartas.
+Una carta ya guardada tampoco se puede volver a guardar: al recibir la
+confirmación de Drive, el botón **Guardar** y todos los campos —incluida la
+firma— quedan desactivados. Una sesión, una carta. Así un segundo clic no deja
+dos PDF idénticos en Drive gastándole al apoderado sus dos cartas, ni se firma
+una segunda carta encima de la primera sin querer. Para la carta de otro
+condómino se recarga la página.
 
 ---
 

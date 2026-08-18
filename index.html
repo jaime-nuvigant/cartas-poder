@@ -396,7 +396,12 @@
   }
 
   /* ---------- Acciones ---------- */
+  // Una carta ya guardada no se vuelve a guardar: dos clics dejarían dos PDF
+  // iguales en Drive y le gastarían al apoderado sus dos cartas.
+  let cartaGuardada = false;
+
   $('btnGuardar').addEventListener('click', async function(){
+    if(cartaGuardada) return;
     if(!validar()) return;
     this.disabled = true;
     estado('info','Generando PDF…');
@@ -433,13 +438,14 @@
         throw new Error(data.error || 'respuesta inesperada del servidor');
       }
 
-      // Ya usó una carta: se recuenta para ocultarlo si llegó al máximo.
-      actualizarConteo();
+      cartaGuardada = true;
+      bloquearFormulario();
 
       const donde = data.carpeta ? ` en la carpeta ${data.carpeta}` : '';
-      estado('ok', data.url
+      estado('ok', (data.url
         ? `Carta guardada en Drive${donde}. <a href="${data.url}" target="_blank" rel="noopener">Abrir archivo</a>`
-        : `Carta guardada en Drive${donde}.`);
+        : `Carta guardada en Drive${donde}.`) +
+        '<br>Esta carta ya quedó registrada y no puede modificarse.');
     }catch(err){
       estado('err', 'No se pudo guardar: ' + err.message +
         '<br>Vuelve a intentarlo; los datos y la firma siguen aquí.');
@@ -449,8 +455,21 @@
     }
   });
 
+  // Cierra el formulario después de guardar: una sesión, una carta. Evita que
+  // se firme una segunda carta encima de la primera sin querer.
+  function bloquearFormulario(){
+    ['otorgante','unidad','idOtorgante','apoderado','btnLimpiarFirma']
+      .forEach(id => { $(id).disabled = true; });
+    $('sigPad').style.pointerEvents = 'none';
+  }
+
   function configurarGuardado(){
     const btn = $('btnGuardar');
+    if(cartaGuardada){
+      btn.disabled = true;
+      btn.title = 'Esta carta ya se guardó.';
+      return;
+    }
     if(!CFG.APPS_SCRIPT_URL || !CFG.TOKEN){
       btn.disabled = true;
       btn.title = 'Falta configurar config.js (ver README.md)';
