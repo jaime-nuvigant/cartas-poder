@@ -1,0 +1,20 @@
+{
+  "name": "sistema-carta-poder-bc67",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Generador de cartas poder para asambleas de condóminos — Baja California 67, Roma Sur, CDMX",
+  "scripts": {
+    "as:login":    "clasp login",
+    "as:create":   "clasp create-script --type standalone --title \"Cartas Poder BC67\" --rootDir apps-script",
+    "as:push":     "clasp push --force",
+    "as:status":   "clasp show-file-status",
+    "as:deploy":   "clasp create-deployment --description \"despliegue\"",
+    "as:redeploy": "clasp update-deployment AKfycbyL4zYHGLjeH1j1ObskbaDfjTZCqLpYlOW24HrgOlJOj3_T8Ax345nQXKI7daJKBzpqxw",
+    "as:list":     "clasp list-deployments",
+    "as:open":     "clasp open-script",
+    "as:logs":     "clasp tail-logs"
+  },
+  "devDependencies": {
+    "@google/clasp": "^3.3.0"
+  }
+}

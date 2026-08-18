@@ -1,0 +1,11 @@
+node_modules/
+
+# CREDENCIALES DE CLASP — nunca deben llegar al repo.
+# Contienen el token OAuth con acceso a tu Google Drive.
+.clasprc.json
+**/.clasprc.json
+
+# Vincula la carpeta local con un script concreto; lo genera `clasp create`.
+# Si el condominio comparte un solo script, puedes versionarlo:
+# borra esta línea y súbelo.
+.clasp.json

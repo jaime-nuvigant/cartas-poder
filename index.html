@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carta Poder — Baja California 67, Roma Sur</title>
+<style>
+  :root{
+    --bg:#f4f4f2; --panel:#ffffff; --ink:#1a1a1a; --muted:#6b6b68;
+    --line:#d9d9d4; --accent:#1f4e5f; --accent-soft:#e8f0f2;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5;
+  }
+  header.app{
+    background:var(--accent); color:#fff; padding:20px 24px;
+  }
+  header.app h1{margin:0; font-size:1.15rem; letter-spacing:.02em}
+  header.app p{margin:4px 0 0; font-size:.85rem; opacity:.85}
+
+  .wrap{
+    max-width:1180px; margin:0 auto; padding:24px;
+    display:grid; grid-template-columns:minmax(320px,420px) 1fr; gap:24px;
+    align-items:start;
+  }
+  @media (max-width:900px){ .wrap{grid-template-columns:1fr} }
+
+  .panel{
+    background:var(--panel); border:1px solid var(--line); border-radius:10px;
+    padding:20px;
+  }
+  .panel h2{margin:0 0 14px; font-size:.95rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted)}
+
+  label{display:block; font-size:.8rem; font-weight:600; margin:12px 0 4px; color:#3a3a38}
+  input,select,textarea{
+    width:100%; padding:9px 10px; font:inherit; font-size:.92rem;
+    border:1px solid var(--line); border-radius:6px; background:#fff; color:var(--ink);
+  }
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--accent-soft); border-color:var(--accent)}
+  .row{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+  .hint{font-size:.75rem; color:var(--muted); margin-top:4px}
+
+  fieldset{border:1px solid var(--line); border-radius:8px; padding:12px 14px 16px; margin:18px 0 0}
+  legend{font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--accent); padding:0 6px}
+
+  #sigPad{
+    width:100%; height:170px; border:1px dashed #b9b9b3; border-radius:6px;
+    background:#fffef9; touch-action:none; cursor:crosshair; display:block;
+  }
+  .btns{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px}
+  #estado{
+    margin-top:12px; padding:9px 11px; border-radius:6px; font-size:.83rem;
+    display:none; line-height:1.4;
+  }
+  #estado.info{display:block; background:#eef3f5; color:#26505f; border:1px solid #cfdee3}
+  #estado.ok{display:block; background:#e9f5ec; color:#215b33; border:1px solid #c3e2cd}
+  #estado.err{display:block; background:#fbecec; color:#7d2626; border:1px solid #eecccc}
+  #estado a{color:inherit}
+  button[disabled]{opacity:.5; cursor:not-allowed}
+  button{
+    font:inherit; font-size:.88rem; font-weight:600; padding:9px 14px;
+    border-radius:6px; border:1px solid var(--accent); cursor:pointer;
+    background:#fff; color:var(--accent);
+  }
+  button.primary{background:var(--accent); color:#fff}
+  button:hover{filter:brightness(.95)}
+  button.ghost{border-color:var(--line); color:var(--muted)}
+
+  /* ---------- Documento ---------- */
+  .paper-scroll{overflow:auto}
+  /* Interlineado y márgenes ajustados para que la carta quepa siempre
+     en una sola hoja carta. */
+  #doc{
+    background:#fff; width:21.59cm; min-height:27.94cm; padding:1.6cm 2.1cm;
+    margin:0 auto; border:1px solid var(--line); border-radius:4px;
+    font-family:"Times New Roman",Georgia,serif; font-size:11pt; line-height:1.42;
+    color:#000; text-align:justify;
+  }
+  #doc .lugar-fecha{text-align:right; margin-bottom:16px}
+  #doc h1.titulo{
+    text-align:center; font-size:13pt; letter-spacing:.14em; margin:0 0 16px;
+    text-transform:uppercase;
+  }
+  #doc .dest{margin-bottom:14px; text-align:left; line-height:1.3}
+  #doc p{margin:0 0 8px}
+  #doc .campo{font-weight:bold; text-transform:uppercase}
+  #doc .firmas{
+    margin-top:22px; display:grid; grid-template-columns:1fr 1fr; gap:36px;
+    text-align:center; font-size:9.5pt; line-height:1.25;
+  }
+  #doc .firma-box{min-height:96px; display:flex; flex-direction:column; justify-content:flex-end}
+  #doc .firma-img{max-height:64px; max-width:100%; object-fit:contain; margin:0 auto 2px; display:block}
+  #doc .firma-linea{border-top:1px solid #000; padding-top:5px; margin-top:auto}
+  #doc .nota{margin-top:16px; font-size:8pt; color:#444; text-align:center; font-style:italic}
+
+  @media print{
+    body{background:#fff}
+    header.app, .panel, .noprint{display:none !important}
+    .wrap{display:block; padding:0; max-width:none}
+    .paper-scroll{overflow:visible}
+    #doc{width:auto; min-height:0; border:0; border-radius:0; padding:1.6cm 2.1cm; margin:0}
+    @page{size:letter; margin:0}
+  }
+</style>
+</head>
+<body>
+
+<header class="app">
+  <h1>Generador de Carta Poder — Asamblea de Condóminos</h1>
+  <p>Baja California 67, Col. Roma Sur, Alcaldía Cuauhtémoc, Ciudad de México</p>
+</header>
+
+<div class="wrap">
+
+  <!-- ===================== FORMULARIO ===================== -->
+  <form class="panel noprint" id="form" autocomplete="off">
+    <h2>Datos de la carta</h2>
+
+    <fieldset>
+      <legend>Quien otorga el poder (condómino)</legend>
+      <label for="otorgante">Nombre completo</label>
+      <input id="otorgante" placeholder="Ej. María Fernanda López Rangel" required>
+
+      <label for="unidad">Unidad / Departamento</label>
+      <input id="unidad" placeholder="Ej. Departamento(s) 1234, 2354">
+
+      <label for="idOtorgante">Identificación (opcional)</label>
+      <input id="idOtorgante" placeholder="Ej. INE 1234567890123">
+    </fieldset>
+
+    <fieldset>
+      <legend>Quien recibe el poder (apoderado)</legend>
+      <label for="apoderado">Nombre completo</label>
+      <select id="apoderado" required></select>
+      <div class="hint">Cada apoderado puede recibir como máximo <strong>2 cartas poder</strong> por asamblea; quien ya las tiene no aparece en la lista.</div>
+      <div class="hint" id="avisoApoderados"></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Firma autógrafa del otorgante</legend>
+      <canvas id="sigPad"></canvas>
+      <div class="hint">Firma con el dedo, el mouse o un stylus.</div>
+      <div class="btns">
+        <button type="button" class="ghost" id="btnLimpiarFirma">Borrar firma</button>
+      </div>
+    </fieldset>
+
+    <div id="estado"></div>
+    <div class="btns" style="margin-top:16px">
+      <button type="button" class="primary" id="btnGuardar">Guardar</button>
+    </div>
+  </form>
+
+  <!-- ===================== DOCUMENTO ===================== -->
+  <div class="paper-scroll">
+    <article id="doc">
+      <p class="lugar-fecha">Ciudad de México, a <span id="o-fechaFirma">___ de _______ de ____</span>.</p>
+
+      <h1 class="titulo">Carta Poder</h1>
+
+      <p class="dest">A quien corresponda<br>
+      Condominio ubicado en Baja California 67,<br>
+      Col. Roma Sur, Alcaldía Cuauhtémoc, Ciudad de México.<br>
+      P r e s e n t e.</p>
+
+      <p>Por medio del presente escrito, yo, <span class="campo" id="o-otorgante">__________</span><span id="o-idOtorgante"></span>, en mi carácter de condómino y/o poseedor legítimo de la unidad privativa identificada como <span class="campo" id="o-unidad">__________</span> del inmueble ubicado en <strong>Baja California número 67, Colonia Roma Sur, Alcaldía Cuauhtémoc, Ciudad de México</strong>, en pleno uso de mis facultades y sin que medie error, dolo, violencia o mala fe, otorgo el más amplio poder que en derecho proceda a favor de:</p>
+
+      <p style="text-align:center; margin:22px 0"><span class="campo" id="o-apoderado" style="font-size:13pt">__________</span></p>
+
+      <p>Para que en mi nombre y representación asista, participe y me represente en la <strong>Asamblea Ordinaria de Condóminos</strong> que se celebrará el día <span class="campo" id="o-fecha">__________</span><span id="o-hora"></span>, en el domicilio del propio condominio o en el lugar que para tal efecto se señale en la convocatoria correspondiente.</p>
+
+      <p>El poder aquí conferido comprende las facultades de intervenir en las deliberaciones, tomar la palabra, formular propuestas, así como <strong>emitir mi voto</strong> respecto de todos y cada uno de los puntos contenidos en el orden del día, incluyendo aquellos que deriven de asuntos generales, obligándome desde este momento a reconocer como propios y a tener por válidos todos los actos que mi apoderado realice al amparo de la presente.</p>
+
+      <p>El presente poder es de carácter <strong>especial y limitado</strong>: surte efectos únicamente para la asamblea antes señalada, incluidas las prórrogas, suspensiones o continuaciones de la misma, así como para la segunda o ulterior convocatoria en caso de que la primera no llegare a celebrarse por falta de quórum, y quedará sin efecto una vez concluida.</p>
+
+      <p>Se firma la presente de manera autógrafa para los efectos legales a que haya lugar, adjuntándose, en su caso, copia de la identificación oficial de quien otorga y de quien acepta el poder.</p>
+
+      <div class="firmas">
+        <div class="firma-box">
+          <img id="o-firmaImg" class="firma-img" alt="" style="display:none">
+          <div class="firma-linea">
+            <strong id="o-otorganteFirma">__________</strong><br>
+            Otorgante del poder<br>
+            <span id="o-unidadFirma"></span>
+          </div>
+        </div>
+        <div class="firma-box">
+          <div class="firma-linea">
+            <strong id="o-apoderadoFirma">__________</strong><br>
+            Acepta el poder
+          </div>
+        </div>
+      </div>
+
+      <p class="nota">Documento generado electrónicamente. Deberá presentarse impreso y acompañado de identificación oficial vigente.</p>
+    </article>
+  </div>
+
+</div>
+
+<script src="vendor/html2canvas.min.js"></script>
+<script src="vendor/jspdf.umd.min.js"></script>
+<script src="config.js"></script>
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const CFG = window.CARTA_CONFIG || {};
+  const MESES = ["enero","febrero","marzo","abril","mayo","junio","julio",
+                 "agosto","septiembre","octubre","noviembre","diciembre"];
+
+  // Datos fijos de la convocatoria vigente (se editan en config.js).
+  const FECHA_ASAMBLEA = CFG.FECHA_ASAMBLEA || '';
+  const HORA_ASAMBLEA  = CFG.HORA_ASAMBLEA || '';
+  const APODERADOS = Array.isArray(CFG.APODERADOS) ? CFG.APODERADOS : [];
+
+  function fechaLarga(iso){
+    if(!iso) return null;
+    const [y,m,d] = iso.split('-').map(Number);
+    if(!y||!m||!d) return null;
+    return `${d} de ${MESES[m-1]} de ${y}`;
+  }
+  function hora12(hhmm){
+    if(!hhmm) return null;
+    const [h,m] = hhmm.split(':').map(Number);
+    return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')} horas`;
+  }
+
+  /* ---------- Firma ---------- */
+  const canvas = $('sigPad');
+  const ctx = canvas.getContext('2d');
+  let dibujando = false, hayFirma = false, ultimo = null;
+
+  function ajustarCanvas(){
+    const data = hayFirma ? canvas.toDataURL() : null;
+    const r = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = Math.round(r.width * dpr);
+    canvas.height = Math.round(r.height * dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.lineWidth = 2.2;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = '#101a3a';
+    if(data){
+      const img = new Image();
+      img.onload = () => ctx.drawImage(img, 0, 0, r.width, r.height);
+      img.src = data;
+    }
+  }
+  window.addEventListener('resize', ajustarCanvas);
+
+  function punto(e){
+    const r = canvas.getBoundingClientRect();
+    const p = e.touches ? e.touches[0] : e;
+    return {x: p.clientX - r.left, y: p.clientY - r.top};
+  }
+  function iniciar(e){ e.preventDefault(); dibujando = true; ultimo = punto(e); }
+  function mover(e){
+    if(!dibujando) return;
+    e.preventDefault();
+    const p = punto(e);
+    ctx.beginPath(); ctx.moveTo(ultimo.x, ultimo.y); ctx.lineTo(p.x, p.y); ctx.stroke();
+    ultimo = p; hayFirma = true;
+  }
+  function terminar(){ if(!dibujando) return; dibujando = false; render(); }
+
+  canvas.addEventListener('pointerdown', iniciar);
+  canvas.addEventListener('pointermove', mover);
+  window.addEventListener('pointerup', terminar);
+  canvas.addEventListener('pointerleave', terminar);
+
+  function limpiarFirma(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    hayFirma = false;
+    render();
+  }
+  $('btnLimpiarFirma').addEventListener('click', limpiarFirma);
+
+  /* ---------- Render del documento ---------- */
+  function render(){
+    const v = id => $(id).value.trim();
+
+    const otorgante = v('otorgante') || '__________';
+    const apoderado = $('apoderado').value || '__________';
+    const unidad    = v('unidad')    || '__________';
+
+    $('o-otorgante').textContent = otorgante;
+    $('o-apoderado').textContent = apoderado;
+    $('o-unidad').textContent    = unidad;
+    $('o-otorganteFirma').textContent = otorgante;
+    $('o-apoderadoFirma').textContent = apoderado;
+    $('o-unidadFirma').textContent = v('unidad') ? v('unidad') : '';
+
+    $('o-idOtorgante').textContent = v('idOtorgante') ? `, quien me identifico con ${v('idOtorgante')}` : '';
+
+    $('o-fecha').textContent = fechaLarga(FECHA_ASAMBLEA) || '__________';
+    $('o-hora').textContent  = hora12(HORA_ASAMBLEA) ? `, a las ${hora12(HORA_ASAMBLEA)}` : '';
+    // La carta se firma el mismo día de la asamblea.
+    $('o-fechaFirma').textContent = fechaLarga(FECHA_ASAMBLEA) || '___ de _______ de ____';
+
+    // Firma
+    const img = $('o-firmaImg');
+    if(hayFirma){
+      img.src = canvas.toDataURL('image/png');
+      img.style.display = 'block';
+    } else {
+      img.removeAttribute('src');
+      img.style.display = 'none';
+    }
+  }
+
+  $('form').addEventListener('input', render);
+  $('form').addEventListener('change', render);
+
+  /* ---------- Validación y estado ---------- */
+  function estado(tipo, html){
+    const el = $('estado');
+    el.className = tipo || '';
+    el.innerHTML = html || '';
+  }
+
+  function validar(){
+    if(!$('otorgante').value.trim() || !$('apoderado').value){
+      estado('err','Faltan datos obligatorios: nombre del otorgante y persona que recibe el poder.');
+      return false;
+    }
+    if(!FECHA_ASAMBLEA){
+      estado('err','Falta la fecha de la asamblea: define FECHA_ASAMBLEA en config.js.');
+      return false;
+    }
+    if(!hayFirma && !confirm('No has trazado la firma autógrafa. ¿Guardar de todas formas para firmar a mano?')) return false;
+    return true;
+  }
+
+  function slug(s){
+    return (s || '')
+      .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+      .replace(/[^A-Za-z0-9]+/g,'-')
+      .replace(/^-+|-+$/g,'')
+      .slice(0,60) || 'sin-dato';
+  }
+
+  function nombreArchivo(){
+    return `Carta-Poder_${FECHA_ASAMBLEA}_${slug($('otorgante').value)}_a_${slug($('apoderado').value)}.pdf`;
+  }
+
+  /* ---------- Generación del PDF ---------- */
+  async function generarPDF(){
+    const doc = $('doc');
+    // El borde de pantalla no va en el PDF: suma píxeles y provoca una
+    // segunda página en blanco por redondeo.
+    const bordeOriginal = doc.style.border;
+    doc.style.border = 'none';
+    let lienzo;
+    try{
+      lienzo = await html2canvas(doc, {
+        scale: 2,
+        backgroundColor: '#ffffff',
+        useCORS: true,
+        logging: false,
+        windowWidth: doc.scrollWidth,
+        windowHeight: doc.scrollHeight
+      });
+    }finally{
+      doc.style.border = bordeOriginal;
+    }
+
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ unit:'pt', format:'letter', orientation:'portrait' });
+    const anchoPag = pdf.internal.pageSize.getWidth();
+    const altoPag  = pdf.internal.pageSize.getHeight();
+
+    const img = lienzo.toDataURL('image/png');
+    const altoImg = lienzo.height * anchoPag / lienzo.width;
+
+    // 'FAST' aplica compresión Flate; sin ella jsPDF incrusta el PNG en crudo
+    // y el archivo se dispara a decenas de MB.
+    const poner = (y) => pdf.addImage(img, 'PNG', 0, y, anchoPag, altoImg, 'carta', 'FAST');
+
+    // Si el contenido excede una carta, se reparte en páginas sucesivas.
+    // La tolerancia evita una página extra en blanco por redondeo de cm a px.
+    const TOLERANCIA = 24; // pt
+    let restante = altoImg, y = 0;
+    poner(y);
+    restante -= altoPag;
+    while(restante > TOLERANCIA){
+      y -= altoPag;
+      pdf.addPage();
+      poner(y);
+      restante -= altoPag;
+    }
+    return pdf;
+  }
+
+  /* ---------- Acciones ---------- */
+  $('btnGuardar').addEventListener('click', async function(){
+    if(!validar()) return;
+    this.disabled = true;
+    estado('info','Generando PDF…');
+    try{
+      const pdf = await generarPDF();
+      const base64 = pdf.output('datauristring').split(',')[1];
+
+      estado('info','Subiendo a Google Drive…');
+      // Content-Type text/plain evita el preflight CORS, que Apps Script no atiende.
+      const resp = await fetch(CFG.APPS_SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({
+          token: CFG.TOKEN,
+          filename: nombreArchivo(),
+          pdfBase64: base64,
+          otorgante: $('otorgante').value.trim(),
+          apoderado: $('apoderado').value,
+          unidad: $('unidad').value.trim(),
+          fechaAsamblea: FECHA_ASAMBLEA,
+          tipoAsamblea: 'Ordinaria'
+        })
+      });
+
+      const data = await resp.json();
+      if(!data.ok){
+        // El servidor rechazó por límite: se refresca la lista para que el
+        // apoderado saturado desaparezca y no se vuelva a intentar con él.
+        if(data.limiteAlcanzado){
+          estado('err', data.error);
+          actualizarConteo();
+          return;
+        }
+        throw new Error(data.error || 'respuesta inesperada del servidor');
+      }
+
+      // Ya usó una carta: se recuenta para ocultarlo si llegó al máximo.
+      actualizarConteo();
+
+      const donde = data.carpeta ? ` en la carpeta ${data.carpeta}` : '';
+      estado('ok', data.url
+        ? `Carta guardada en Drive${donde}. <a href="${data.url}" target="_blank" rel="noopener">Abrir archivo</a>`
+        : `Carta guardada en Drive${donde}.`);
+    }catch(err){
+      estado('err', 'No se pudo guardar: ' + err.message +
+        '<br>Vuelve a intentarlo; los datos y la firma siguen aquí.');
+    }finally{
+      // Reactiva el botón salvo que ya no quede ningún apoderado disponible.
+      configurarGuardado();
+    }
+  });
+
+  function configurarGuardado(){
+    const btn = $('btnGuardar');
+    if(!CFG.APPS_SCRIPT_URL || !CFG.TOKEN){
+      btn.disabled = true;
+      btn.title = 'Falta configurar config.js (ver README.md)';
+      return;
+    }
+    if(APODERADOS.length && !disponibles().length){
+      btn.disabled = true;
+      btn.title = `Ningún apoderado puede recibir más cartas (máximo ${MAX_CARTAS}).`;
+      return;
+    }
+    btn.disabled = false;
+    btn.title = '';
+  }
+
+  /* ---------- Límite de cartas por apoderado ---------- */
+  // El servidor es quien manda: aquí solo se ocultan de la lista los que ya
+  // llegaron al tope, para no hacer llenar el formulario en balde.
+  const MAX_CARTAS = 2;
+  let conteoApoderados = {};   // { nombreNormalizado: cartas ya recibidas }
+
+  function normalizar(nombre){
+    return (nombre || '')
+      .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+      .replace(/\s+/g,' ').trim().toLowerCase();
+  }
+
+  function cartasDe(nombre){
+    return conteoApoderados[normalizar(nombre)] || 0;
+  }
+
+  function disponibles(){
+    return APODERADOS.filter(n => cartasDe(n) < MAX_CARTAS);
+  }
+
+  // Rellena la lista de apoderados definida en config.js, dejando fuera a
+  // quienes ya tienen el máximo de cartas para esta asamblea.
+  function inicializarApoderados(){
+    const sel = $('apoderado');
+    const previo = sel.value;
+    const libres = disponibles();
+    sel.innerHTML = '';
+
+    if(!APODERADOS.length){
+      sel.appendChild(new Option('— sin apoderados en config.js —',''));
+    } else if(!libres.length){
+      sel.appendChild(new Option('— sin apoderados disponibles —',''));
+    } else {
+      if(libres.length > 1) sel.appendChild(new Option('— Selecciona —',''));
+      libres.forEach(n => sel.appendChild(new Option(n, n)));
+      if(libres.indexOf(previo) !== -1) sel.value = previo;
+    }
+
+    const ocupados = APODERADOS.length - libres.length;
+    const aviso = $('avisoApoderados');
+    if(APODERADOS.length && !libres.length){
+      aviso.innerHTML = `<strong>Todos los apoderados ya llegaron a ${MAX_CARTAS} cartas poder para esta asamblea.</strong> No es posible otorgar más.`;
+    } else if(ocupados === 1){
+      aviso.textContent = `1 apoderado quedó fuera de la lista por haber llegado al máximo.`;
+    } else if(ocupados > 1){
+      aviso.textContent = `${ocupados} apoderados quedaron fuera de la lista por haber llegado al máximo.`;
+    } else {
+      aviso.textContent = '';
+    }
+
+    configurarGuardado();
+    render();
+  }
+
+  // Consulta al Apps Script cuántas cartas lleva cada apoderado. Si falla
+  // (sin red, despliegue viejo), se deja la lista completa: el servidor
+  // rechazará de todos modos al que ya llegó al tope.
+  async function actualizarConteo(){
+    if(!CFG.APPS_SCRIPT_URL || !FECHA_ASAMBLEA) return;
+    try{
+      const url = `${CFG.APPS_SCRIPT_URL}?accion=conteo&fecha=${encodeURIComponent(FECHA_ASAMBLEA)}`;
+      const resp = await fetch(url);
+      const data = await resp.json();
+      if(data && data.ok && data.conteo) conteoApoderados = data.conteo;
+    }catch(err){
+      // Silencioso a propósito: no es un error que el usuario deba resolver.
+    }
+    inicializarApoderados();
+  }
+
+  // Init
+  ajustarCanvas();
+  inicializarApoderados();
+  configurarGuardado();
+  render();
+  actualizarConteo();
+})();
+</script>
+</body>
+</html>
