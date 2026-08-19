@@ -28,7 +28,7 @@ window.CARTA_CONFIG = {
     "Jaime Calderón Mátar"
     ,"Egon Peter Warner Salazar"
     ,"Patricia Margarita Hernández Martínez"
-    ,"Luis Reyes Galván"
+    ,"Luis ALfredo Reyes Galván"
     ,"Héctor Ricardez Mendez"
   ]
 
