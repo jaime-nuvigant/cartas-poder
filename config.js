@@ -27,10 +27,11 @@ window.CARTA_CONFIG = {
   APODERADOS: [
     "Jaime Calderón Mátar"
     ,"Egon Peter Warner Salazar"
+    ,"Patricia Margarita Hernández Martínez"
     ,"Claudia Sofía Curiel Rentería"
     ,"Luis Reyes Galván"
-    ,"Héctor Ricardez Mendez"
     ,"Isidoro Sarfati Dultzin"
+    ,"Héctor Ricardez Mendez"
   ]
 
 };
