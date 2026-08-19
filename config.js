@@ -28,8 +28,9 @@ window.CARTA_CONFIG = {
     "Jaime Calderón Mátar"
     ,"Egon Peter Warner Salazar"
     ,"Claudia Sofía Curiel Rentería"
-    ,"Isidoro Sarfati Dultzin"
     ,"Luis Reyes Galván"
+    ,"Héctor Ricardez Mendez"
+    ,"Isidoro Sarfati Dultzin"
   ]
 
 };
