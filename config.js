@@ -26,6 +26,8 @@ window.CARTA_CONFIG = {
   // Agrega o quita nombres de esta lista según convenga.
   APODERADOS: [
     "Jaime Calderón Mátar"
+    ,"Egon Peter Wagner Salazar"
+    ,"Melisa Cristina Valdes Pinzon"
   ]
 
 };
