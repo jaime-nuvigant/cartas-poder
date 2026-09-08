@@ -30,6 +30,7 @@ window.CARTA_CONFIG = {
     ,"Melisa Cristina Valdes Pinzon"
     ,"Paola Torres Padilla"
     ,"Hector Iván Gonzalez Montes"
+    ,"Luis Alfredo Reyes Galván"
   ]
 
 };
