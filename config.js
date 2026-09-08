@@ -26,10 +26,6 @@ window.CARTA_CONFIG = {
   // Agrega o quita nombres de esta lista según convenga.
   APODERADOS: [
     "Jaime Calderón Mátar"
-    ,"Egon Peter Warner Salazar"
-    ,"Patricia Margarita Hernández Martínez"
-    ,"Luis ALfredo Reyes Galván"
-    ,"Héctor Ricardez Mendez"
   ]
 
 };
