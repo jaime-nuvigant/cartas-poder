@@ -16,7 +16,7 @@ window.CARTA_CONFIG = {
 
   // Fecha de la próxima asamblea, en formato AAAA-MM-DD.
   // Cámbiala cada vez que se convoque una nueva asamblea.
-  FECHA_ASAMBLEA: "2026-08-20",
+  FECHA_ASAMBLEA: "2026-09-08",
 
   // Hora de la asamblea en formato HH:MM (24 h). Déjala vacía ("")
   // si la convocatoria no señala hora.
