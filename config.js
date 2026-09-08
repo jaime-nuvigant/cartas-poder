@@ -28,6 +28,8 @@ window.CARTA_CONFIG = {
     "Jaime Calderón Mátar"
     ,"Egon Peter Wagner Salazar"
     ,"Melisa Cristina Valdes Pinzon"
+    ,"Paola Torres Padilla"
+    ,"Hector Iván Gonzalez Montes"
   ]
 
 };
